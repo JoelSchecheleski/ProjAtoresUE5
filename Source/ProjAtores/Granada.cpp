@@ -8,6 +8,7 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "Sound/SoundCue.h"
 #include "EngineUtils.h"
+#include "Engine/StaticMeshActor.h"
 #include "Kismet/GameplayStatics.h" // Usado para manipular a função SetGlocalTimeDilation()
 
 // Sets default values
@@ -78,6 +79,32 @@ void AGranada::RestaurarTempo()
 	GetWorldTimerManager().ClearTimer(TimerDoTempo);
 }
 
+// Cria um Impulso radial de força e raio
+void AGranada::ImpulsoRadial(float Raio, float Forca)
+{
+	//NOTA:Busca todos os objetos da cena pelo mundo percorrendo um container(coleção de elementos)
+	//     Os Iteradores de Ator(TActorIterator) e os Iteradores de Object(TObjectIterator) sempre retorna
+	//     uma lista real de todos os atores/objetos que ainda estão ativaos no mundo do jogo.
+	//     
+	//OBS: Essas funções podem ser usadas para procurar todas as instâncias de atores e objetos, ou apenas
+	//     subclasses específicas, em tempo de execução, removendo a necessidade de manter matrizes dinâmicas
+	//     de atores e tendo que lembrar de remover os atores após a destruição.
+	for (TActorIterator<AStaticMeshActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Nome: %s, %x"), *ActorItr->GetName(), *ActorItr);
+		UStaticMeshComponent* RaizDoStaticMesh;
+		RaizDoStaticMesh = Cast<UStaticMeshComponent>(ActorItr->GetRootComponent());
+		if(RaizDoStaticMesh)
+		{
+			if(RaizDoStaticMesh->Mobility == EComponentMobility::Movable)
+			{
+				RaizDoStaticMesh->SetSimulatePhysics(true);
+				RaizDoStaticMesh->AddRadialImpulse(GetActorLocation(), Raio, Forca, ERadialImpulseFalloff::RIF_Linear, true);
+			}
+		}
+	}
+}
+
 
 void AGranada::ExplodirGranada()
 {
@@ -86,6 +113,7 @@ void AGranada::ExplodirGranada()
 	TempoDevagar(0.05); // Antes da explosão o tempo será mais lento e depois de 2*0.05 ele voltará ao normal.
 	Explosao->ActivateSystem();
 	MalhaDoAutor->SetVisibility(false);
+	ImpulsoRadial(5000.f, 1000.f);
 }
 
 void AGranada::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -103,6 +131,5 @@ void AGranada::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void AGranada::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
