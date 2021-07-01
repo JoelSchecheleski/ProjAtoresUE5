@@ -49,6 +49,9 @@ protected:
 	// Função que recebe como parâmetro o Raio e a Força a ser aplicado no objeto
 	UFUNCTION()
 	void ImpulsoRadial(float Raio, float Forca);
+
+	UFUNCTION()
+	void Teste();
 	
 public:	
 	// Called every frame

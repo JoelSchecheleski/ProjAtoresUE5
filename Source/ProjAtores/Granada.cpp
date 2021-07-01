@@ -103,8 +103,17 @@ void AGranada::ImpulsoRadial(float Raio, float Forca)
 			}
 		}
 	}
-}
 
+	for (TObjectIterator<USkeletalMeshComponent> It; It; ++It)
+	{
+		if (It->GetWorld() == GetWorld())
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Nome: %s End: %X \n"), *It->GetName(), *It);
+			It->SetSimulatePhysics(true);
+			It->AddRadialImpulse(GetActorLocation(), Raio, Forca, ERadialImpulseFalloff::RIF_Linear, true);
+		}
+	}
+}
 
 void AGranada::ExplodirGranada()
 {
