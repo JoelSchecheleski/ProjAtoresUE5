@@ -45,6 +45,10 @@ protected:
 
 	UFUNCTION()
 	void ExplodirGranada();
+
+	// Função que recebe como parâmetro o Raio e a Força a ser aplicado no objeto
+	UFUNCTION()
+	void ImpulsoRadial(float Raio, float Forca);
 	
 public:	
 	// Called every frame
