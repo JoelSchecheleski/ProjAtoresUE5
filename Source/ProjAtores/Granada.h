@@ -50,9 +50,6 @@ protected:
 	UFUNCTION()
 	void ImpulsoRadial(float Raio, float Forca);
 
-	UFUNCTION()
-	void Teste();
-	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

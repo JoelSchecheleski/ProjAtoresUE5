@@ -10,6 +10,14 @@
 #include "EngineUtils.h"
 #include "Engine/StaticMeshActor.h"
 #include "Kismet/GameplayStatics.h" // Usado para manipular a função SetGlocalTimeDilation()
+//#include "Components/SkeletalMeshComponent.h"
+
+//#include "Components/StaticMeshComponent.h"
+//#include "Engine/EngineTypes.h"
+//#include "UObject/ConstructorHelpers.h"
+//#include "TimerManager.h"
+//#include "Engine/Engine.h"
+//#include "UObject/UObjectIterator.h"
 
 // Sets default values
 AGranada::AGranada()
