@@ -104,8 +104,14 @@ void AGranada::ImpulsoRadial(float Raio, float Forca)
 		}
 	}
 
+	// Iteração sobre os Objetos por isso o uso do TObjectIterator
+	// NOTE: O objetivo do TObjectIterator é essencialmente encontrar todos os objetos de um tipo e colocar os resultados em um
+	//       ObjectArray que o TObjectIterator  finaliza com nullptr.
+	// O construtor de TOjectIterator chama a função GetObjectsOfClass() para limitar o escopo da pesquisa a uma classe UObject
+	// escolhida em TObjectIterator<UObject>
 	for (TObjectIterator<USkeletalMeshComponent> It; It; ++It)
 	{
+		// Verifica se é do mesmo mundo
 		if (It->GetWorld() == GetWorld())
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Nome: %s End: %X \n"), *It->GetName(), *It);
