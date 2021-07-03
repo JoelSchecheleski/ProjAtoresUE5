@@ -10,6 +10,7 @@
 #include "EngineUtils.h"
 #include "Engine/StaticMeshActor.h"
 #include "Kismet/GameplayStatics.h" // Usado para manipular a função SetGlocalTimeDilation()
+#include "UObject/UObjectBaseUtility.h"
 
 // Sets default values
 AGranada::AGranada()
@@ -96,7 +97,7 @@ void AGranada::ImpulsoRadial(float Raio, float Forca)
 		RaizDoStaticMesh = Cast<UStaticMeshComponent>(ActorItr->GetRootComponent());
 		if(RaizDoStaticMesh)
 		{
-			if(RaizDoStaticMesh->Mobility == EComponentMobility::Movable)
+			if(RaizDoStaticMesh->Mobility == EComponentMobility::Movable )// && (ActorItr->GetName() == FString("CadeiraEsquerda")) )
 			{
 				RaizDoStaticMesh->SetSimulatePhysics(true);
 				RaizDoStaticMesh->AddRadialImpulse(GetActorLocation(), Raio, Forca, ERadialImpulseFalloff::RIF_Linear, true);
